@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <title>Mecze Fifa</title>
+    <style>
+        body {
+            background-color: #454343;
+            color: #fff;
+            font-family: "Soehne Schmal", -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+        th, td {
+            border: 1px solid #60677e;
+            padding: 8px;
+        }
+        th {
+            background-color: #626779;
+        }
+
+        h1 {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    {% if current_user.is_authenticated %}
+        <a href="{{ url_for('logout') }}">Logout</a>
+    {% else %}
+        <form method="post" action="{{ url_for('login') }}">
+            <input type="hidden" value="asd" id="username" name="username" required>
+            <br>
+            <input type="hidden" value="asd" id="password" name="password" required>
+            <br>
+            <input type="submit" value="Login">
+        </form>
+    {% endif %}
+    <h1>Mecze Fifa</h1>
+    <form method="get" action="{{ url_for('index') }}">
+        <label for="sort_by">Posortuj tabele:</label>
+        <select id="sort_by" name="sort_by">
+            <option value="id_match">ID</option>
+            <option value="country_one">Pierwszy Kraj</option>
+            <option value="country_two">Drugi Kraj</option>
+            <option value="country_one_goals">Bramki Pierwszego kraju</option>
+            <option value="country_two_goals">Bramki Drugiego kraju</option>
+            <option value="date_match">Data Meczu</option>
+        </select>
+        <input type="submit" value="Sortuj">
+    </form>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Pierwszy Kraj</th>
+                <th>Drugi Kraj</th>
+                <th>Bramki Pierwszego Kraju</th>
+                <th>Bramki Drugiego Kraju</th>
+                <th>Data Meczu</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for match in matches %}
+                <tr>
+                    <td>{{ match.id_match }}</td>
+                    <td>{{ match.country_one }}</td>
+                    <td>{{ match.country_two }}</td>
+                    <td>{{ match.country_one_goals }}</td>
+                    <td>{{ match.country_two_goals }}</td>
+                    <td>{{ match.date_match }}</td>
+                    <td>
+                        <form action="{{ url_for('delete_match') }}" method="post">
+                            <input type="hidden" name="id_match" value="{{ match.id_match }}">
+                            <input type="submit" value="Usuń">
+                        </form>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <div>
+        <h2>Dodaj Nowy Mecz</h2>
+        <form method="post" action="{{ url_for('index') }}">
+            <label for="country_one">Pierwszy Kraj: </label>
+            <input type="text" id="country_one" name="country_one" required>
+            <br>
+            <label for="country_two">Drugi Kraj: </label>
+            <input type="text" id="country_two" name="country_two" required>
+            <br>
+            <label for="country_one_goals">Bramki Pierwszego Kraju: </label>
+            <input type="number" id="country_one_goals" name="country_one_goals" min="0" required>
+            <br>
+            <label for="country_two_goals">Bramki Drugiego Kraju: </label>
+            <input type="number" id="country_two_goals" name="country_two_goals" min="0" required>
+            <br>
+            <label for="date_match">Data Meczu:</label>
+            <input type="date" id="date_match" name="date_match" required>
+            <br>
+            <input type="submit" value="Dodaj Mecz">
+        </form>
+    </div>
+</body>
+</html>

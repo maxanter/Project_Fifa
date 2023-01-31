@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <title>Login</title>
+    <style>
+        body {
+            background-color: #454343;
+            color: #fff;
+            font-family: "Soehne Schmal", -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+        form {
+            width: 300px;
+            margin: 0 auto;
+        }
+        label {
+            display: block;
+            margin-bottom: 10px;
+        }
+        h1{
+            text-align: center;
+            text-transform: uppercase;
+        }
+        input[type="text"], input[type="password"] {
+            width: 100%;
+            padding: 12px 20px;
+            margin: 8px 0;
+            box-sizing: border-box;
+            border: 2px solid #ccc;
+            border-radius: 4px;
+        }
+        input[type="submit"] {
+            width: 100%;
+            background-color: #3d3d3d;
+            color: #fff;
+            padding: 12px 20px;
+            margin: 8px 0;
+            border: 2px solid #ccc;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        input[type="submit"]:hover {
+            background-color: #ccc;
+            color: #000;
+        }
+        div{
+            position: absolute;
+            top: 25%;
+            left: 40%;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <h1>Login</h1>
+        <form method="post" action="{{ url_for('login') }}">
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" required>
+            <br>
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required>
+            <br>
+            <input type="submit" value="Login">
+        </form>
+    </div>
+</body>
+</html>
